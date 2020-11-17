@@ -49,4 +49,22 @@ class InMemoryUserRepository implements UserRepository
 
         return $this->users[$id];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function loginUserOfId(string $username): User
+    {
+        /**
+         * turn the object into an array and search for the username in the 3D array
+         */
+        $data = json_decode( json_encode($this->users), true);
+
+        $key = (array_search($username, array_column($data, 'username'))+1);
+        if (!isset($this->users[$key])) {
+            throw new UserNotFoundException();
+        }
+
+        return $this->users[$key];
+    }
 }
