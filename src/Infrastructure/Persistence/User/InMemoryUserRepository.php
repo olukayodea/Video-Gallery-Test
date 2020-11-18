@@ -60,7 +60,12 @@ class InMemoryUserRepository implements UserRepository
          */
         $data = json_decode( json_encode($this->users), true);
 
-        $key = (array_search($username, array_column($data, 'username'))+1);
+        $key = array_search($username, array_column($data, 'username'));
+        if ($key == false) {
+            $key = 0;
+        } else {
+            $key = $key + 1;
+        }
         if (!isset($this->users[$key])) {
             throw new UserNotFoundException();
         }
