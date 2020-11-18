@@ -1,8 +1,18 @@
 <template>
   <div>
+    <Navbar/>
     <Nuxt />
   </div>
 </template>
+<script>
+import Navbar from '~/components/Navbar'
+
+export default {
+  components: {
+    Navbar
+  }
+}
+</script>
 
 <style>
 html {
@@ -35,14 +45,15 @@ html {
   display: inline-block;
   border-radius: 4px;
   border: 1px solid #3b8070;
-  color: #3b8070;
+  color: #fff;
+  background-color: #3b8070;
   text-decoration: none;
   padding: 10px 30px;
 }
 
 .button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+  color: #3b8070;
+  background-color: #fff;
 }
 
 .button--grey {
