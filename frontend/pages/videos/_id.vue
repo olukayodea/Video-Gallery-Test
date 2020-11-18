@@ -9,7 +9,6 @@
         <img class="placeholder" src="https://dummyimage.com/600x400/000/000000" alt="landscape" />
     </div>
 
-    <div class="istia_embed wistia_async_ybyot0dm7q" style="height:349px;width:620px">&nbsp;</div>
     <h3>{{ title }}</h3>
     <h4>{{ category }}</h4>
 
@@ -22,19 +21,10 @@
   </div>
 
 </template>
-<script src="//fast.wistia.com/embed/medias/ybyot0dm7q.jsonp" async></script>
 <script>
 import axios from 'axios'
 
 export default {
-  head() {
-    return {
-        script: [
-            { hid: 'stripe', src: '<https//fast.wistia.com/embed/medias/ybyot0dm7q.jsonp>', defer: true },
-            { hid: 'stripe', src: '<https//fast.wistia.com/assets/external/E-v1.js>', defer: true },
-        ]
-    };
-  },
   data() {
     return {
         video_ref: "",
@@ -46,7 +36,6 @@ export default {
   async asyncData ({ params, error }) {
     try {
       const { data } = await axios.get(`http://localhost:8080/videos/${+params.id}`)
-      console.log(data);
       return data.data
     } catch (e) {
       error({ message: 'Video not found', statusCode: 404 })
