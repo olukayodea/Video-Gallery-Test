@@ -6,34 +6,45 @@
       </div>
     </div>
     <div class="row">
-      <div class="col">
-        <b-list-group>
-          <b-list-group-item>Cras justo odio</b-list-group-item>
-          <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-          <b-list-group-item>Morbi leo risus</b-list-group-item>
-          <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-          <b-list-group-item>Vestibulum at eros</b-list-group-item>
-        </b-list-group>
+      <div class="col-3">
+        <p v-if="$fetchState.pending">Fetching mountains...</p>
+        <p v-else-if="$fetchState.error">An error occurred :(</p>
+        <div v-else>
+          <div v-for="video of videos.data" v-bind:key="video">
+            <b-card 
+              :title="video.title"
+              tag="article"
+              style="max-width: 20rem;"
+              class="mb-2"
+            >
+              <b-card-text>
+                {{video.description}}
+              </b-card-text>
+              <NuxtLink class="button--green" :to="'/videos/'+video.id">
+                View
+              </NuxtLink>
+            </b-card>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      form: {
-        email: ''
-      },
-    };
-  },
-  methods: {
-    onSubmit(){
-      console.log('A form was submitted');
+  export default {
+    middleware: 'session',
+    data() {
+      return {
+        videos: []
+      }
     },
+    async fetch() {
+      this.videos = await fetch(
+        'http://localhost:8080/videos'
+      ).then(res => res.json())
+    }
   }
-}
 </script>
 
 <style>
