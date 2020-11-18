@@ -53,12 +53,33 @@ export default {
   */
   modules: [
     // Doc: https://bootstrap-vue.js.org
-    'bootstrap-vue/nuxt'
+    'bootstrap-vue/nuxt',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+  },
+  /**
+   * Axios
+   */
+  axios: {
+    baseURL: 'http://localhost:8080/'
+  },
+  
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'users/login', method: 'post', propertyName: 'data.id' },
+          videos: { url: 'videos', method: 'get', propertyName: 'data' },
+          user: { url: 'videos', method: 'get', propertyName: 'data' },
+          logout: false
+        }
+      }
+    }
   }
 }
